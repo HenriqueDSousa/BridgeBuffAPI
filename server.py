@@ -96,13 +96,7 @@ def rank_escaped():
         "next": f"/api/rank/escaped?limit={limit}&start={start + limit}" if start + limit < total_games else None
     }
 
-    # Return the response as a JSON object
     return jsonify(response)
-
-
-@app.route('/hello')
-def hello():
-    return scores
 
 
 if __name__ == '__main__':
