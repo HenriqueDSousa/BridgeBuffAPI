@@ -33,7 +33,8 @@ def get_game_by_id(id):
                 "tstamp_auth_completion": game['tstamp_auth_completion'],
                 "tstamp_auth_start": game['tstamp_auth_start'],
                 "tstamp_completion":game['tstamp_completion'],
-                "valid_shots": game['valid_shots']
+                "valid_shots": game['valid_shots'],
+                "gas": game['auth']
             }   
         })
 
@@ -64,7 +65,7 @@ def rank_sunk():
         "start": start,
         "games": [game['id'] for game in paginated_games],
         "prev": None if start <= 0 else f"/api/rank/sunk?limit={limit}&start={max(0, start - limit)}",
-        "next": None if start + limit >= total_games else f"/api/rank/sunk?limit={limit}&start={start + limit}"
+        "next": None if start+limit >= total_games else f"/api/rank/sunk?limit={limit}&start={start+limit}"
     }
 
     return jsonify(response)
@@ -93,7 +94,7 @@ def rank_escaped():
         "start": start,
         "games": [game['id'] for game in paginated_games],
         "prev": f"/api/rank/escaped?limit={limit}&start={max(0, start - limit)}" if start > 0 else None,
-        "next": f"/api/rank/escaped?limit={limit}&start={start + limit}" if start + limit < total_games else None
+        "next": f"/api/rank/escaped?limit={limit}&start={start+limit}" if start+limit < total_games else None
     }
 
     return jsonify(response)
