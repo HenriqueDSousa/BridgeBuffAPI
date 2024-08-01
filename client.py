@@ -93,10 +93,14 @@ def analyze_cannon_placements(host, output_file):
 
     for game_id in games:
         game_details = get_game_details(host, game_id)
-        placement = game_details["game_stats"]["cannon_placement"]
+        placement = game_details["game_stats"]["cannons"]
         escaped_ships = game_details["game_stats"]["escaped_ships"]
         
-        normalized_placement = "".join(str(placement.count(i)) for i in range(8))
+        placement_counts = [0, 0, 0, 0, 0, 0, 0, 0]
+        for elem in placement:
+            placement_counts[elem[0] - 1] += 1
+
+        normalized_placement = "".join([str(p) for p in placement_counts])
         
         if normalized_placement not in placement_stats:
             placement_stats[normalized_placement] = {"count": 0, "total_escaped": 0}
