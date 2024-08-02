@@ -59,7 +59,7 @@ The client connects to a remote server via HTTP, retrieves game data, and perfor
 To run the client, use the following command:
 
 ```bash
-./client.py <IP> <port> <analysis> <output>
+./client <IP> <port> <analysis> <output>
 ```
 Parameters
 
