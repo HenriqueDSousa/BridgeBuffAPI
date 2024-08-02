@@ -90,9 +90,23 @@ def analyze_best_performance(host):
     top100 = sorted(top100, key=lambda x: x['sunk_ships'], reverse=True)
     top100 = top100[:100]
 
+    num_games = 0
+
     for elem in top100:
         gas_stats[elem['gas']]["count"] += 1
         gas_stats[elem['gas']]["total_sunk"] += elem["sunk_ships"]
+
+    sorted_gas_stats = sorted(gas_stats.items(), key=lambda x: x[1]['count'], reverse=True)
+
+    num_games = 0
+    gas_stats = []
+    for gas, stats in sorted_gas_stats:
+        num_games += stats["count"]
+        if num_games > 100:
+            break
+        avg_sunk = stats["total_sunk"] / stats["count"]
+        stats["average_sunk"] = avg_sunk
+        gas_stats.append({"gas": gas, "stats": stats})
 
     return gas_stats
 

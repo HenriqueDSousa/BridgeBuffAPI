@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/python3
 
 import socket
 import json
@@ -80,10 +80,14 @@ def analyze_best_performance(host, output_file):
         gas_stats[elem['gas']]["count"] += 1
         gas_stats[elem['gas']]["total_sunk"] += elem["sunk_ships"]
     
-    print(gas_stats)
-    
+    sorted_gas_stats = sorted(gas_stats.items(), key=lambda x: x[1]['count'], reverse=True)
+
+    num_games = 0
     with open(output_file, "w") as f:
-        for gas, stats in gas_stats.items():
+        for gas, stats in sorted_gas_stats:
+            num_games += stats["count"]
+            if num_games > 100:
+                break
             avg_sunk = stats["total_sunk"] / stats["count"]
             f.write(f"{gas},{stats['count']},{avg_sunk}\n")
 
