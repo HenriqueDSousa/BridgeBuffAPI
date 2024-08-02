@@ -83,7 +83,7 @@ This application provides a user interface for analyzing game data using a Strea
 To start the Streamlit application, use the following command:
 
 ```bash
-python3 streamlit -m run client_ui.py
+python3 -m streamlit run client_ui.py
 ```
 
 Open your web browser and navigate to http://localhost:8501 to access the Game Analysis Web Interface.
@@ -99,6 +99,6 @@ Choose one of the following analysis types from the dropdown menu:
 * Cannon Placements: Analyzes cannon placements and their correlation with escaped ships.
 * Select Game by ID: Allows you to retrieve and view details of a specific game by entering its ID.
 
-4. Start Analysis
+3. Start Analysis
 Click the "Start Analysis" button to execute the selected analysis. Results will be displayed below the button based on your choice.
 
