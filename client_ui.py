@@ -24,6 +24,26 @@ def get_response(sock):
 
     return json.loads(body.decode())
 
+def get_game_by_id(game_id):
+    path = f'/api/game/{game_id}'
+    response = {"game": []}
+    ip, port = host.split(":")
+    
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((ip, int(port)))
+        request = create_http_request("GET", path, host)
+        sock.sendall(request.encode())
+        response = get_response(sock)
+    except (BrokenPipeError, ConnectionResetError) as e:
+        st.error(f"Socket error: {e}")
+        
+    except Exception as e:
+        st.error(f"Error: {e}")
+        
+    return response
+       
+
 def get_games(host, ranking_type, limit=50):
     path = f"/api/rank/{ranking_type}?limit={limit}&start=0"
     response = {"games": []}
@@ -104,7 +124,12 @@ def analyze_cannon_placements(host):
 st.title("Game Analysis Tool")
 
 host = st.text_input("Host (IP:Port)", "localhost:8000")
-analysis = st.selectbox("Analysis Type", ["Best Performance", "Cannon Placements"])
+analysis = st.selectbox("Analysis Type", ["Best Performance", "Cannon Placements", "Select game by id"])
+
+game_id = None
+if analysis == "Select game by id":
+    game_id = st.number_input("Enter Game ID:", min_value=1, step=1)
+
 start_analysis = st.button("Start Analysis")
 
 if start_analysis:
@@ -116,3 +141,8 @@ if start_analysis:
         results = analyze_cannon_placements(host)
         st.write("Cannon Placement Stats:")
         st.write(results)
+    
+    elif analysis == "Select game by id":
+        result = get_game_by_id(game_id)
+        st.write(f"Game {game_id}:")
+        st.write(result)
