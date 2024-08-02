@@ -1,6 +1,6 @@
 # Bridge Buff API
 
- Authors: **Gabriel Franco Jallais and Henrique Daniel de Sousa**
+ Authors: **Gabriel Franco Jallais (2021031890) and Henrique Daniel de Sousa (2021031912)**
 
  This is the implementation of a server and a client with a ***Web Interface*** to export statistics on Bridge Defense games played in the servers in our class.
 
